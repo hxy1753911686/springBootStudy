@@ -18,4 +18,34 @@
       where city_name = #{cityName}
     </select>
 
+    <select id="findCityById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+          id,province_id,city_name,description
+        from springbootdb.city
+        where id = #{id}
+    </select>
+
+    <insert id="saveCity" parameterMap="org.spring.springboot.entity.City" useGeneratedKeys="true" keyProperty="id">
+        insert into city(id, province_id, city_name, description) values(#{id},${provinceId},${cityName},${description})
+    </insert>
+
+    <update id="updateCity" parameterMap="org.spring.springboot.entity.City">
+      update springbootdb.city
+      set
+      <if test="provinceId!=null">
+          province_id = #{provenceId},
+      </if>
+      <if test="cityName!=null">
+          city_name = #{cityName},
+      </if>
+      <if test="description!=null">
+          description = #{description}
+      </if>
+      where id = #{id}
+    </update>
+
+    <delete id="deleteCity" parameterType="java.lang.Long">
+      delete from springbootdb.city where id = #{id}
+    </delete>
+
 </mapper>

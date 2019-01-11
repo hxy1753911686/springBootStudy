@@ -1,6 +1,8 @@
 package org.spring.springboot.entity;
 
-public class City {
+import java.io.Serializable;
+
+public class City implements Serializable {
     //城市編號
     private int id;
     //省份id
