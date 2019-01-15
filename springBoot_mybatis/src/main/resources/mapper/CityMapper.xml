@@ -8,7 +8,8 @@
         <result column="city_name" property="cityName" />
         <result column="description" property="description" />
     </resultMap>
-    
+
+    <!-- 如果不用parameterMap,直接在以下的parameterMap中寫類路徑，會報錯 -->
     <parameterMap id="City" type="org.spring.springboot.entity.City" />
 
     <select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -25,11 +26,11 @@
         where id = #{id}
     </select>
 
-    <insert id="saveCity" parameterMap="org.spring.springboot.entity.City" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveCity" parameterMap="City" useGeneratedKeys="true" keyProperty="id">
         insert into city(id, province_id, city_name, description) values(#{id},${provinceId},${cityName},${description})
     </insert>
 
-    <update id="updateCity" parameterMap="org.spring.springboot.entity.City">
+    <update id="updateCity" parameterMap="City">
       update springbootdb.city
       set
       <if test="provinceId!=null">

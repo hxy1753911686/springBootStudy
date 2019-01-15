@@ -5,7 +5,11 @@ import org.spring.springboot.entity.City;
 import org.spring.springboot.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class CityServiceImpl implements CityService {
@@ -13,7 +17,7 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private CityDao cityDao;
 
-    @Autowired
+    @Resource
     private RedisTemplate redisTemplate;
 
     @Override
@@ -28,7 +32,26 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     public City findCityById(Long id) {
-        return null;
+        String key = "city_" + id;
+        ValueOperations<String, City> valueOperations = redisTemplate.opsForValue();
+
+        //判斷key是否存在
+        boolean bflag = redisTemplate.hasKey(key);
+        if (bflag) {
+            City city = valueOperations.get(key);
+            return city;
+        }
+
+        //redis中不存在key，從DB獲取
+        City city = cityDao.findCityById(id);
+
+        //將city插入緩存
+        /*
+            參數從左至右為
+                鍵，值，過期時間，時間單位
+         */
+        valueOperations.set(key, city, 30, TimeUnit.SECONDS);
+        return city;
     }
 
     /*
@@ -37,7 +60,8 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     public Long saveCity(City city) {
-        return null;
+        Long line = cityDao.saveCity(city);
+        return line;
     }
 
     /*
@@ -47,7 +71,16 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     public Long updateCity(City city) {
-        return null;
+        Long line = cityDao.updateCity(city);
+
+        String key = "city_" + city.getId();
+        boolean bFlag = redisTemplate.hasKey(key);
+        //如果緩存存在，刪除緩存
+        if (bFlag) {
+            redisTemplate.delete(key);
+        }
+        return line;
+
     }
 
     /*
@@ -56,6 +89,13 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     public Long deleteCity(Long id) {
-        return null;
+        Long line = cityDao.deleteCity(id);
+
+        String key = "city_" + id;
+        boolean bFlag = redisTemplate.hasKey(key);
+        if (bFlag) {
+            redisTemplate.delete(key);
+        }
+        return line;
     }
 }
