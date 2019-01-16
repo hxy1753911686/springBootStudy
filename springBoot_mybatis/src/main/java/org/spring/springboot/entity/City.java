@@ -20,20 +20,20 @@ public class City implements Serializable {
         this.id = id;
     }
 
-    public int getProvince_id() {
+    public int getProvinceId() {
         return provinceId;
     }
 
-    public void setProvince_id(int province_id) {
-        this.provinceId = province_id;
+    public void setProvinceId(int provinceId) {
+        this.provinceId = provinceId;
     }
 
-    public String getCity_name() {
+    public String getCityName() {
         return cityName;
     }
 
-    public void setCity_name(String city_name) {
-        this.cityName = city_name;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public String getDescription() {

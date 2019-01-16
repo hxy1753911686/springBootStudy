@@ -4,10 +4,11 @@ import org.spring.springboot.entity.City;
 import org.spring.springboot.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 
@@ -17,15 +18,31 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
-    @RequestMapping(value = "/index",method = RequestMethod.GET)
-    public String gotoIndex(HashMap<String,Object> map){
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String gotoIndex(HashMap<String, Object> map) {
         return "/showCity";
     }
 
-    @RequestMapping(value = "/findOneCity",method = RequestMethod.GET)
-    public City findOneCity(@RequestParam(value = "cityName",required = true)String cityName){
+    @RequestMapping(value = "/findOneCity", method = RequestMethod.GET)
+    public City findOneCity(@RequestParam(value = "cityName", required = true) String cityName) {
         return cityService.findByName(cityName);
     }
 
-    public void
+    @RequestMapping(value = "addCity", method = RequestMethod.POST)
+    public String addNewCity(HashMap<String, Object> map) {
+        return "/addCity";
+    }
+
+    @RequestMapping(value = "saveCity", method = RequestMethod.POST)
+    public String saveCity(@ModelAttribute City city) {
+        cityService.saveCity(city);
+        return "/addCity";
+    }
+
+    @RequestMapping(value = "findCity", method = RequestMethod.POST)
+    public String findCityById(@RequestParam(value = "cityId") Long cityId, Model model) {
+        City city = cityService.findCityById(cityId);
+        model.addAttribute("cityList", city);
+        return "redirect:index";
+    }
 }

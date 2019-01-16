@@ -1,13 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>查詢城市</title>
 </head>
+
 <body>
-    <form id="subForm" name="subForm" action="">
-        <search id="searchId" name="searchId" />
-    </form>
+<button formaction="/addCity">新增</button>
+<form id="subForm" name="subForm" method="post" action="/findCity">
+    <table>
+        <tr>
+            <td>
+                <input id="cityId" name="cityId" />
+            </td>
+            <td>
+                <button type="submit">查詢</button>
+            </td>
+        </tr>
+
+    </table>
+    <table cellpadding="5px" border="1px">
+        <tr>
+            <th>
+                <h3>城市名稱</h3>
+            </th>
+            <th>
+                <h3>省份ID</h3>
+            </th>
+            <th>
+                <h3>城市描述</h3>
+            </th>
+        </tr>
+        <tr th:each="city,iterStat:${cityList}">
+            <td th:text="${city.cityName}">
+                @城市名稱
+            </td>
+            <td th:text="${city.provinceId}">
+                @省份ID
+            </td>
+            <td th:text="${city.description}">
+                @城市描述
+            </td>
+        </tr>
+    </table>
+</form>
 
 </body>
 </html>
