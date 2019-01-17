@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 //@RestController   如果要跳頁面，必須用Controller
 @Controller
@@ -41,8 +43,15 @@ public class CityController {
 
     @RequestMapping(value = "findCity", method = RequestMethod.POST)
     public String findCityById(@RequestParam(value = "cityId") Long cityId, Model model) {
-        City city = cityService.findCityById(cityId);
-        model.addAttribute("cityList", city);
-        return "redirect:index";
+        List<City> list = new ArrayList<City>();
+        if(cityId != null){
+            City city = cityService.findCityById(cityId);
+            list.add(city);
+        }else {
+            list = cityService.findAllCity();
+        }
+
+        model.addAttribute("cityList", list);
+        return "/showCity";
     }
 }

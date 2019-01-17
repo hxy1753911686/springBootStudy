@@ -26,6 +26,12 @@
         where id = #{id}
     </select>
 
+    <select id="findAllCity" resultMap="BaseResultMap" resultType="City">
+        select
+            id,province_id,city_name,description
+        from springbootdb.city
+    </select>
+
     <insert id="saveCity" parameterMap="City" useGeneratedKeys="true" keyProperty="id">
         insert into city(id, province_id, city_name, description) values(#{id},#{provinceId},#{cityName},#{description})
     </insert>

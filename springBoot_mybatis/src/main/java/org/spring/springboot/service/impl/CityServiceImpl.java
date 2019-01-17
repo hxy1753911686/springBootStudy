@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -52,6 +53,12 @@ public class CityServiceImpl implements CityService {
          */
         valueOperations.set(key, city, 30, TimeUnit.SECONDS);
         return city;
+    }
+
+    @Override
+    public List findAllCity() {
+        List allCity = cityDao.findAllCity();
+        return allCity;
     }
 
     /*

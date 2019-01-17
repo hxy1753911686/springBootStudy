@@ -6,12 +6,15 @@
 </head>
 
 <body>
-<button formaction="/addCity">新增</button>
+<form id="addForm" name="addForm" method="post">
+    <button formaction="/addCity">新增</button>
+</form>
+
 <form id="subForm" name="subForm" method="post" action="/findCity">
     <table>
         <tr>
             <td>
-                <input id="cityId" name="cityId" />
+                <input id="cityId" name="cityId"/>
             </td>
             <td>
                 <button type="submit">查詢</button>
@@ -22,6 +25,9 @@
     <table cellpadding="5px" border="1px">
         <tr>
             <th>
+                <h3>序號</h3>
+            </th>
+            <th>
                 <h3>城市名稱</h3>
             </th>
             <th>
@@ -31,7 +37,10 @@
                 <h3>城市描述</h3>
             </th>
         </tr>
-        <tr th:each="city,iterStat:${cityList}">
+        <tr th:each="city:${cityList}">
+            <td th:text="${cityStat.count}">
+                1
+            </td>
             <td th:text="${city.cityName}">
                 @城市名稱
             </td>
