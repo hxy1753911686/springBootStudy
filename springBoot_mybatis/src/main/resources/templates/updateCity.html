@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>修改城市</title>
+</head>
+<body>
+    <form method="post" action="/updateCity">
+        <table>
+            <tr>
+                <input hidden="hidden" id="cityId" name="id" th:value="${city.id}" />
+                <td>
+                    <b>城市名稱:</b>
+                </td>
+                <td>
+                    <input id="city_name" name="cityName" th:value="${city.cityName}" />
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <b>所屬省份:</b>
+                </td>
+                <td>
+                    <select id="city_pro" name="provinceId" >
+                        <option value="">=請選擇=</option>
+                        <option value="1">1:山西省</option>
+                        <option value="2">2:江西省</option>
+                        <option value="3">3:浙江省</option>
+                        <option value="4">4:黑龍江省</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <b>城市描述:</b>
+                </td>
+                <td>
+                    <input id="city_desc" name="description" th:value="${city.description}"/>
+                </td>
+            </tr>
+            <tr >
+                <td>
+                    <button type="submit">保存</button>
+                </td>
+            </tr>
+
+        </table>
+    </form>
+</body>
+</html>

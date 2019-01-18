@@ -36,20 +36,30 @@
             <th>
                 <h3>城市描述</h3>
             </th>
+            <th>
+                <h3>操作</h3>
+            </th>
         </tr>
+
         <tr th:each="city:${cityList}">
-            <td th:text="${cityStat.count}">
-                1
-            </td>
-            <td th:text="${city.cityName}">
-                @城市名稱
-            </td>
-            <td th:text="${city.provinceId}">
-                @省份ID
-            </td>
-            <td th:text="${city.description}">
-                @城市描述
-            </td>
+            <div th:if="${city!=null}">
+                <td th:text="${cityStat.count}">
+                    1
+                </td>
+                <td th:text="${city.cityName}">
+                    @城市名稱
+                </td>
+                <td th:text="${city.provinceId}">
+                    @省份ID
+                </td>
+                <td th:text="${city.description}">
+                    @城市描述
+                </td>
+                <td>
+                   <button th:formaction="'/updateCity/' + ${city.id}">修改</button>
+                    <button th:formaction="'/deleteCity/'+${city.id}" >刪除</button>
+                </td>
+            </div>
         </tr>
     </table>
 </form>
