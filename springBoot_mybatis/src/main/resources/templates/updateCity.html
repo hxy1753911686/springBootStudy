@@ -22,12 +22,12 @@
                     <b>所屬省份:</b>
                 </td>
                 <td>
-                    <select id="city_pro" name="provinceId" >
+                    <select id="city_pro" name="provinceId" th:value="${city.provinceId}">
                         <option value="">=請選擇=</option>
-                        <option value="1">1:山西省</option>
-                        <option value="2">2:江西省</option>
-                        <option value="3">3:浙江省</option>
-                        <option value="4">4:黑龍江省</option>
+                        <option th:selected="${city.provinceId==1}" value="1">1:山西省</option>
+                        <option th:selected="${city.provinceId==2}" value="2">2:江西省</option>
+                        <option th:selected="${city.provinceId==3}" value="3">3:浙江省</option>
+                        <option th:selected="${city.provinceId==4}" value="4">4:黑龍江省</option>
                     </select>
                 </td>
             </tr>

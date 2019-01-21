@@ -40,7 +40,7 @@
       update springbootdb.city
       set
       <if test="provinceId!=null">
-          province_id = #{provenceId},
+          province_id = #{provinceId},
       </if>
       <if test="cityName!=null">
           city_name = #{cityName},
